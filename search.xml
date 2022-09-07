@@ -4,6 +4,31 @@
   
     
     <entry>
+      <title>ST表模板</title>
+      <link href="/posts/eeaad1e3.html"/>
+      <url>/posts/eeaad1e3.html</url>
+      
+        <content type="html"><![CDATA[<p><a href="https://www.luogu.com.cn/problem/P3865">ST表模板</a></p><h4 id="代码">代码</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br></pre></td><td class="code"><pre><span class="line">#define _CRT_SECURE_NO_WARNINGS</span><br><span class="line">#include&lt;iostream&gt;</span><br><span class="line">#include&lt;iomanip&gt;</span><br><span class="line">#include&lt;cmath&gt;</span><br><span class="line">#include&lt;cstring&gt;</span><br><span class="line">#include&lt;algorithm&gt;</span><br><span class="line">#include&lt;complex&gt;</span><br><span class="line">#include&lt;array&gt;</span><br><span class="line">#include&lt;vector&gt;</span><br><span class="line">#include&lt;queue&gt;</span><br><span class="line">#include&lt;stack&gt;</span><br><span class="line">#include&lt;set&gt;</span><br><span class="line">#include&lt;map&gt;</span><br><span class="line">#include&lt;unordered_set&gt;</span><br><span class="line">#include&lt;unordered_map&gt;</span><br><span class="line">#include&lt;sstream&gt;</span><br><span class="line">#include&lt;functional&gt;</span><br><span class="line">#include&lt;cassert&gt;</span><br><span class="line">using namespace std;</span><br><span class="line">typedef long long ll;</span><br><span class="line">typedef unsigned long long ull;</span><br><span class="line">typedef vector&lt;int&gt; vi;</span><br><span class="line">typedef vector&lt;ll&gt; vl;</span><br><span class="line">typedef vector&lt;bool&gt; vb;</span><br><span class="line">typedef queue&lt;int&gt; qi;</span><br><span class="line">typedef pair&lt;int, int&gt; pii;</span><br><span class="line">typedef pair&lt;ll, ll&gt; pll;</span><br><span class="line">typedef pair&lt;double, double&gt; pdd;</span><br><span class="line">typedef tuple&lt;int, int, int&gt; tiii;</span><br><span class="line">typedef vector&lt;pii&gt; vii;</span><br><span class="line">typedef vector&lt;pll&gt; vll;</span><br><span class="line">typedef queue&lt;pii&gt; qii;</span><br><span class="line">typedef complex&lt;double&gt; cp;</span><br><span class="line">#define Fup(i,a,b) for(int i=a;i&lt;=b;i++)</span><br><span class="line">#define Fde(i,a,b) for(int i=a;i&gt;=b;i--)</span><br><span class="line">const int INF = 0x3f3f3f3f;</span><br><span class="line">int a[100001] , st[100001][100], n, m;</span><br><span class="line"></span><br><span class="line">void pre()&#123;</span><br><span class="line">    Fup(i , 1 , n) st[i][0] = a[i];</span><br><span class="line">    Fup(j , 1 , log2(n))&#123;</span><br><span class="line">        Fup(i , 1 , n - (1&lt;&lt;j) + 1)</span><br><span class="line">            st[i][j] = max(st[i][j-1],st[i+(1&lt;&lt;(j-1))][j-1]);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">int ask(int l ,int r)&#123;</span><br><span class="line">    int k = log2(r - l + 1);</span><br><span class="line">    return max(st[l][k] , st[r-(1&lt;&lt;k)+1][k]);</span><br><span class="line">&#125;</span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">scanf(&quot;%d%d&quot;, &amp;n, &amp;m);</span><br><span class="line">for (int i = 1; i &lt;= n; i++)</span><br><span class="line">scanf(&quot;%d&quot;, &amp;a[i]);</span><br><span class="line">pre();</span><br><span class="line">for (int i = 1; i &lt;= m; i++)</span><br><span class="line">&#123;</span><br><span class="line">int l, r;</span><br><span class="line">scanf(&quot;%d%d&quot;, &amp;l, &amp;r);</span><br><span class="line">printf(&quot;%d\n&quot;, ask(l, r));</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]></content>
+      
+      
+      <categories>
+          
+          <category> 算法 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 基本算法 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>二分模板</title>
       <link href="/posts/2d211083.html"/>
       <url>/posts/2d211083.html</url>
